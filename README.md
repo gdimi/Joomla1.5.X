@@ -1,3 +1,14 @@
+
+Joomla1.5.X
+============
+Joomla 1.5.x End of Life + all hot fixes from the community, plus fixes for open issues in 1.5 joomla tracker, plus my own fixes. Originaly forked from 1.5.999 git repo
+
+George Dimitrakopoulos 2014
+
+
+
+ORIGINAL README.md FROM 1.5.999
+
 Joomla1.5.999
 =============
 
