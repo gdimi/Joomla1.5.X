@@ -19,6 +19,7 @@ if (!isset($this->error)) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title><?php echo $this->error->code ?> - <?php echo $this->title; ?></title>
 	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/system/css/error.css" type="text/css" />
 	<?php if($this->direction == 'rtl') : ?>
