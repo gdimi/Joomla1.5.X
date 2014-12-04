@@ -112,7 +112,7 @@ class BannersModelBanner extends JModel
 			$db->setQuery( $query );
 
 			if(!$db->query()) {
-				JError::raiseError( 500, $db->stderror());
+				JError::raiseError( 500, $db->stderr());
 			}
 
 			if ($trackImpressions)
@@ -129,7 +129,7 @@ class BannersModelBanner extends JModel
 				$db->setQuery( $query );
 
 				if(!$db->query()) {
-					JError::raiseError( 500, $db->stderror() );
+					JError::raiseError( 500, $db->stderr() );
 				}
 			}
 		}
@@ -154,7 +154,7 @@ class BannersModelBanner extends JModel
 
 		$db->setQuery( $query );
 		if(!$db->query()) {
-			JError::raiseError( 500, $db->stderror());
+			JError::raiseError( 500, $db->stderr());
 		}
 
 		if ($trackClicks)
@@ -165,7 +165,7 @@ class BannersModelBanner extends JModel
 			$db->setQuery( $query );
 
 			if(!$db->query()) {
-				JError::raiseError( 500, $db->stderror() );
+				JError::raiseError( 500, $db->stderr() );
 			}
 		}
 

@@ -344,7 +344,7 @@ class ContentModelSection extends JModel
 			// Check for db errors
 			if ($this->_db->getErrorNum())
 			{
-				JError::raiseError(500, $this->_db->stderror());
+				JError::raiseError(500, $this->_db->stderr());
 				return false;
 			}
 
