@@ -26,11 +26,11 @@ class JVersion
 	/** @var string Development Status */
 	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= 'X';
+	var $DEV_LEVEL 	= '27';
 	/** @var int build Number */
 	var $BUILD	= '';
 	/** @var string Codename */
-	var $CODENAME 	= 'senu takaa ama busani';
+	var $CODENAME 	= 'senu takaa ama busani/1.5.X';
 	/** @var string Date */
 	var $RELDATE 	= '27-March-2012';
 	/** @var string Time */
