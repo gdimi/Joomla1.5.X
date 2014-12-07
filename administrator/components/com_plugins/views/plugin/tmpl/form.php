@@ -18,6 +18,7 @@
 <?php
 	$this->plugin->nameA = '';
 	if ( $this->plugin->id ) {
+		$row = new stdClass(); //gdimi 7-12-14
 		$row->nameA = '<small><small>[ '. $this->plugin->name .' ]</small></small>';
 	}
 ?>
