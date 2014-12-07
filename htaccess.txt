@@ -59,7 +59,10 @@ RewriteRule .* index.php [F]
 # If you need to redirect some pages, or set a canonical non-www to
 # www redirect (or vice versa), place that code here. Ensure those
 # redirects use the correct RewriteRule syntax and the [R=301,L] flags.
-#
+# 1.5.X add redirect for weird rfi attacks through url
+RewriteCond %{QUERY_STRING} ^.*=(ht)|(f)+(tp)+(://|s://)+.*(\?\?)+
+RewriteRule .* http://gggooooooglleee.com/ [R,L]
+
 ########## End - Custom redirects
 
 
