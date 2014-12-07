@@ -26,7 +26,7 @@ class JVersion
 	/** @var string Development Status */
 	var $DEV_STATUS = 'Stable';
 	/** @var int Sub Release Level */
-	var $DEV_LEVEL 	= '26';
+	var $DEV_LEVEL 	= 'X';
 	/** @var int build Number */
 	var $BUILD	= '';
 	/** @var string Codename */
@@ -40,7 +40,7 @@ class JVersion
 	/** @var string Copyright Text */
 	var $COPYRIGHT 	= 'Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.';
 	/** @var string URL */
-	var $URL 	= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU General Public License.';
+	var $URL 	= '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU General Public License.<br /> This is a modified version o Joomla by George Dimitrakopoulos. Check its <a href="https://github.com/gdimi/Joomla1.5.X">github</a> for more!.';
 
 	/**
 	 *
