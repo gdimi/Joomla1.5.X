@@ -52,8 +52,12 @@ function modChrome_jarounded($module, &$params, &$attribs)
 					<div>
 						<?php if ($module->showtitle != 0) : ?>
 						<?php
-						if(isset($_COOKIE['Mod'.$module->id])) $modhide = $_COOKIE['Mod'.$module->id];
-						else $modhide = 'show';
+						if(isset($_COOKIE['Mod'.$module->id])) { //gdimi fix possible xss
+							$modhide = $_COOKIE['Mod'.$module->id];
+							$modhide = htmlspecialchars($_COOKIE['Mod'.$module->id], ENT_QUOTES);
+						} else {
+							$modhide = 'show';
+						}
 						?>
 						<h3 class="<?php echo $modhide; ?>"><span><?php echo $module->title; ?></span></h3>
 						<?php endif; ?>
