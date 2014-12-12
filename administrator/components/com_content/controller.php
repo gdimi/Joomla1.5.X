@@ -93,6 +93,7 @@ class ContentController extends JController
 		if ($filter_sectionid >= 0) {
 			$filter = ' WHERE cc.section = '. (int) $filter_sectionid;
 		}
+		$section = new stdClass;
 		$section->title = 'All Articles';
 		$section->id = 0;
 
