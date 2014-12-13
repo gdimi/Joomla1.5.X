@@ -74,6 +74,7 @@ class modMostReadHelper
 		$lists	= array();
 		foreach ( $rows as $row )
 		{
+			$lists[$i] = new stdClass;
 			if($row->access <= $aid)
 			{
 				$lists[$i]->link = JRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catslug, $row->sectionid));
