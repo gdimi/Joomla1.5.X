@@ -87,13 +87,13 @@ function pagination_list_render($list)
 
 	foreach( $list['pages'] as $page )
 	{
-		if($page['data']['active']) {
+		if($page['active']['data']) {
 			$html .= '<strong>';
 		}
 
-		$html .= $page['data'];
+		$html .= $page['active']['data'];
 
-		if($page['data']['active']) {
+		if($page['active']['data']) {
 			$html .= '</strong>';
 		}
 	}
