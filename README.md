@@ -3,6 +3,8 @@ Joomla1.5.X
 ============
 Joomla 1.5.x End of Life + all hot fixes from the community, plus fixes for open issues in 1.5 joomla tracker, plus my own fixes. Originaly forked from 1.5.999 git repo
 
+Tested up to PHP version 5.6.3 and it works with many strict and deprecated messages. Propably will not work in next major php version
+
 George Dimitrakopoulos 2014
 
 
