@@ -183,7 +183,7 @@ class JDatabaseMySQLi extends JDatabase
 	function hasUTF()
 	{
 		$verParts = explode( '.', $this->getVersion() );
-		return ($verParts[0] == 5 || ($verParts[0] == 4 && $verParts[1] == 1 && (int)$verParts[2] >= 2));
+		return ($verParts[0] >= 5  || ($verParts[0] == 4 && $verParts[1] == 1 && (int)$verParts[2] >= 2));
 	}
 
 	/**
