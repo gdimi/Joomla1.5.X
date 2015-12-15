@@ -697,13 +697,8 @@ class JSession extends JObject
 			}
 		}
 
-		// record proxy forwarded for in the session in case we need it later
-		if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$this->set( 'session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
-		}
-
 		// check for client adress
-		if( in_array( 'fix_adress', $this->_security ) && isset( $_SERVER['REMOTE_ADDR'] ) )
+		if(in_array('fix_adress', $this->_security) && isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) !== false)
 		{
 			$ip	= $this->get( 'session.client.address' );
 
@@ -718,7 +713,7 @@ class JSession extends JObject
 		}
 
 		// check for clients browser
-		if( in_array( 'fix_browser', $this->_security ) && isset( $_SERVER['HTTP_USER_AGENT'] ) )
+		if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) !== false)
 		{
 			$browser = $this->get( 'session.client.browser' );
 
