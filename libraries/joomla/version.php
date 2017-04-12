@@ -32,7 +32,7 @@ class JVersion
 	/** @var string Codename */
 	var $CODENAME 	= 'senu takaa ama busani/1.5.X';
 	/** @var string Date */
-	var $RELDATE 	= '27-March-2012';
+	var $RELDATE 	= '15-December-2015';
 	/** @var string Time */
 	var $RELTIME 	= '18:00';
 	/** @var string Timezone */
