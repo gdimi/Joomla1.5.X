@@ -116,7 +116,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		<p class="copyright">
 			<a href="http://www.joomla.org" target="_blank">Joomla!</a>
 			<?php echo  JText::_('ISFREESOFTWARE') ?>
-			<br />This is a modified version o Joomla by George Dimitrakopoulos. Check its <a href="https://github.com/gdimi/Joomla1.5.X">github</a> for more!
+			<br />This is a modified version of Joomla by George Dimitrakopoulos. Check <a href="https://github.com/gdimi/Joomla1.5.X">github</a> for more!
 		</p>
 	</div>
 </body>
