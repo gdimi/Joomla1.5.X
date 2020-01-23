@@ -39,7 +39,7 @@ class JTableModule extends JTable
 	/** @var boolean */
 	var $checked_out		= 0;
 	/** @var time */
-	var $checked_out_time	= 0;
+	var $checked_out_time	= '1000-01-01 00:00:00';
 	/** @var boolean */
 	var $published			= null;
 	/** @var string */

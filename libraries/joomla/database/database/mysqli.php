@@ -36,7 +36,7 @@ class JDatabaseMySQLi extends JDatabase
 	 *
 	 * @var string
 	 */
-	var $_nullDate		= '0000-00-00 00:00:00';
+	var $_nullDate		= '1000-01-01 00:00:00';
 
 	/**
 	 * Quote for named objects
