@@ -58,6 +58,13 @@ class JSession extends JObject
 	var	$_store	=	null;
 
 	/**
+	 * Internal data store for the session data
+	 *
+	 * @var  JRegistry
+	 */
+	protected $data;
+
+	/**
 	* security policy
 	*
 	* Default values:
@@ -259,6 +266,16 @@ class JSession extends JObject
 	}
 
 	/**
+	 * Returns a clone of the internal data pointer
+	 *
+	 * @return  JRegistry
+	 */
+	public function getData()
+	{
+		return clone $this->data;
+	}
+
+	/**
 	 * Get the session handlers
 	 *
 	 * @access public
@@ -323,10 +340,7 @@ class JSession extends JObject
 			return $error;
 		}
 
-		if (isset($_SESSION[$namespace][$name])) {
-			return $_SESSION[$namespace][$name];
-		}
-		return $default;
+		return $this->data->getValue($namespace . '.' . $name, $default);
 	}
 
 	/**
@@ -347,15 +361,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		$old = isset($_SESSION[$namespace][$name]) ?  $_SESSION[$namespace][$name] : null;
-
-		if (null === $value) {
-			unset($_SESSION[$namespace][$name]);
-		} else {
-			$_SESSION[$namespace][$name] = $value;
-		}
-
-		return $old;
+		return $this->data->setValue($namespace . '.' . $name, $value);
 	}
 
 	/**
@@ -375,7 +381,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		return isset( $_SESSION[$namespace][$name] );
+		return !is_null($this->data->getValue($namespace . '.' . $name, null));
 	}
 
 	/**
@@ -395,13 +401,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		$value	=	null;
-		if( isset( $_SESSION[$namespace][$name] ) ) {
-			$value	=	$_SESSION[$namespace][$name];
-			unset( $_SESSION[$namespace][$name] );
-		}
-
-		return $value;
+		return $this->data->setValue($namespace . '.' . $name, null);
 	}
 
 	/**
@@ -419,12 +419,23 @@ class JSession extends JObject
 			session_id( $this->_createId() );
 		}
 
+		register_shutdown_function(array($this, 'close'));
 		session_cache_limiter('none');
 		session_start();
 
 		// Send modified header for IE 6.0 Security Policy
 		header('P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"');
 
+		// Ok let's unserialize the whole thing
+		$this->data = new JRegistry;
+
+		// Try loading data from the session
+		if (isset($_SESSION['joomla']) && !empty($_SESSION['joomla']))
+		{
+			$data = $_SESSION['joomla'];
+			$data = base64_decode($data);
+			$this->data = unserialize($data);
+		}
 		return true;
 	}
 
@@ -432,7 +443,7 @@ class JSession extends JObject
 	/**
 	 * Frees all session variables and destroys all data registered to a session
 	 *
-	 * This method resets the $_SESSION variable and destroys all of the data associated
+	 * This method resets the data pointer and destroys all of the data associated
 	 * with the current session in its storage (file or DB). It forces new session to be
 	 * started after this method is called. It does not unset the session cookie.
 	 *
@@ -456,6 +467,7 @@ class JSession extends JObject
 			setcookie(session_name(), '', time()-42000, '/');
 		}
 
+		$this->data = new JRegistry;
 		session_unset();
 		session_destroy();
 
@@ -525,8 +537,21 @@ class JSession extends JObject
 	 * @access public
 	 * @see	session_write_close()
 	 */
-	function close() {
+	function close() 
+	{
+		if ($this->_state !== 'active')
+		{
+			// @TODO :: generated error here
+			return false;
+		}
+
+		$session = JFactory::getSession();
+		$data    = $session->getData();
+
+		// Before storing it, let's serialize and encode the JRegistry object
+		$_SESSION['joomla'] = base64_encode(serialize($data));
 		session_write_close();
+ 		return true;
 	}
 
 	 /**
@@ -552,7 +577,8 @@ class JSession extends JObject
 	 *
 	 * @access private
 	 */
-	function _setCookieParams() {
+	function _setCookieParams() 
+	{
 		$cookie	=	session_get_cookie_params();
 		if($this->_force_ssl) {
 			$cookie['secure'] = true;
@@ -697,12 +723,13 @@ class JSession extends JObject
 			}
 		}
 
-		// check for client adress
+		// Check for client address
 		if(in_array('fix_adress', $this->_security) && isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) !== false)
 		{
 			$ip	= $this->get( 'session.client.address' );
 
-			if( $ip === null ) {
+			if($ip === null)
+			{
 				$this->set( 'session.client.address', $_SERVER['REMOTE_ADDR'] );
 			}
 			else if( $_SERVER['REMOTE_ADDR'] !== $ip )
@@ -713,8 +740,7 @@ class JSession extends JObject
 		}
 
 		// check for clients browser
-		if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) !== false)
-		{
+
 			$browser = $this->get( 'session.client.browser' );
 
 			if( $browser === null ) {
@@ -725,6 +751,12 @@ class JSession extends JObject
 //				$this->_state	=	'error';
 //				return false;
 			}
+
+		// Record proxy forwarded for in the session in case we need it later
+		if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) !== false)
+		{
+
+			$this->set('session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
 		}
 
 		return true;
